@@ -1,0 +1,50 @@
+{
+   "AppendLinkTargetToExistingPDF": {
+      "message": "Lägg till länkad sida i en annan PDF"
+   },
+   "AppendToExistingPDF": {
+      "message": "Lägg till i en annan PDF"
+   },
+   "ConvertLinkTargetToPDF": {
+      "message": "Konvertera länkad sida till Foxit PDF"
+   },
+   "ConvertToFoxitPDF": {
+      "message": "Konvertera till Foxit PDF"
+   },
+   "CreateAndEmail": {
+      "message": "Skapa och skicka med e-post"
+   },
+   "OptionsTitle": {
+      "message": "Foxit PhantomPDF – tilläggsalternativ"
+   },
+   "Preferences": {
+      "message": "Inställningar"
+   },
+   "Reinstall": {
+      "message": "Installera om"
+   },
+   "Uninstall": {
+      "message": "Avinstallera"
+   },
+   "UninstallSuccessTip": {
+      "message": "\"Foxit PhantomPDF – Skapa PDF\"-tillägget har avinstallerats. Ändringarna börjar gälla när du startat om webbläsaren."
+   },
+   "UninstallSureTip": {
+      "message": "AVINSTALLATIONEN kan inte ångras. Vill du avinstallera?"
+   },
+   "UninstallTip": {
+      "message": "AVINSTALLATIONEN kan inte ångras; var försiktig!"
+   },
+   "ViewPDFResults": {
+      "message": "Visa PDF-resultat"
+   },
+   "default_title": {
+      "message": "För att konvertera webbplatsen till Foxit PDF"
+   },
+   "extDesc": {
+      "message": "För att konvertera webbplatsen till Foxit PDF"
+   },
+   "extName": {
+      "message": "Foxit PDF Creator"
+   }
+}

@@ -1,0 +1,50 @@
+{
+   "AppendLinkTargetToExistingPDF": {
+      "message": "將連結的頁面附加至其他 PDF"
+   },
+   "AppendToExistingPDF": {
+      "message": "附加至其他 PDF"
+   },
+   "ConvertLinkTargetToPDF": {
+      "message": "將連結的頁面轉換成 Foxit PDF"
+   },
+   "ConvertToFoxitPDF": {
+      "message": "轉換成 Foxit PDF"
+   },
+   "CreateAndEmail": {
+      "message": "建立並發送電子郵件"
+   },
+   "OptionsTitle": {
+      "message": "Foxit PhantomPDF 延伸模組選項"
+   },
+   "Preferences": {
+      "message": "偏好設定"
+   },
+   "Reinstall": {
+      "message": "重新安裝"
+   },
+   "Uninstall": {
+      "message": "解除安裝"
+   },
+   "UninstallSuccessTip": {
+      "message": "\"Foxit PhantomPDF - 建立 PDF\" 延伸模組成功解除安裝，將在重新啟動瀏覽器後生效。"
+   },
+   "UninstallSureTip": {
+      "message": "解除安裝作業無法恢復，確定要解除安裝?"
+   },
+   "UninstallTip": {
+      "message": "解除安裝作業無法恢復，請小心操作!"
+   },
+   "ViewPDFResults": {
+      "message": "檢視 PDF 結果"
+   },
+   "default_title": {
+      "message": "將網頁轉換成 Foxit PDF"
+   },
+   "extDesc": {
+      "message": "將網頁轉換成 Foxit PDF"
+   },
+   "extName": {
+      "message": "Foxit PDF Creator"
+   }
+}

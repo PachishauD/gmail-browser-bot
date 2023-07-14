@@ -1,0 +1,50 @@
+{
+   "AppendLinkTargetToExistingPDF": {
+      "message": "Append Linked Page to Another PDF"
+   },
+   "AppendToExistingPDF": {
+      "message": "Append to Another PDF"
+   },
+   "ConvertLinkTargetToPDF": {
+      "message": "Convert Linked Page to Foxit PDF"
+   },
+   "ConvertToFoxitPDF": {
+      "message": "Convert to Foxit PDF"
+   },
+   "CreateAndEmail": {
+      "message": "Create and Email"
+   },
+   "OptionsTitle": {
+      "message": "Options"
+   },
+   "Preferences": {
+      "message": "Preferences"
+   },
+   "Reinstall": {
+      "message": "Reinstall"
+   },
+   "Uninstall": {
+      "message": "Uninstall"
+   },
+   "UninstallSuccessTip": {
+      "message": "Uninstalling successfully,come into force after restart your browser."
+   },
+   "UninstallSureTip": {
+      "message": "UNINSTALL will be unrecoverable, are you sure to uninstall ?"
+   },
+   "UninstallTip": {
+      "message": "UNINSTALL will be unrecoverable, please careful operation !"
+   },
+   "ViewPDFResults": {
+      "message": "View PDF Result"
+   },
+   "default_title": {
+      "message": "To convert the web page to Foxit PDF"
+   },
+   "extDesc": {
+      "message": "To convert the web page to Foxit PDF"
+   },
+   "extName": {
+      "message": "Foxit PDF Creator"
+   }
+}

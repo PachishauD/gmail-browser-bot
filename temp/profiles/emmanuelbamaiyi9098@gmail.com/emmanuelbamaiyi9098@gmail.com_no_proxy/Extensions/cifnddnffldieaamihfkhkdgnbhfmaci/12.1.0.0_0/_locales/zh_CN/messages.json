@@ -1,0 +1,50 @@
+{
+   "AppendLinkTargetToExistingPDF": {
+      "message": "将链接到的网页附加到其它PDF"
+   },
+   "AppendToExistingPDF": {
+      "message": "附加到其它PDF"
+   },
+   "ConvertLinkTargetToPDF": {
+      "message": "将链接到的网页转换为福昕PDF"
+   },
+   "ConvertToFoxitPDF": {
+      "message": "转换为福昕PDF"
+   },
+   "CreateAndEmail": {
+      "message": "创建并通过邮件发送"
+   },
+   "OptionsTitle": {
+      "message": "选项"
+   },
+   "Preferences": {
+      "message": "偏好设置"
+   },
+   "Reinstall": {
+      "message": "重新安装"
+   },
+   "Uninstall": {
+      "message": "卸载"
+   },
+   "UninstallSuccessTip": {
+      "message": "卸载成功，重启浏览器后生效"
+   },
+   "UninstallSureTip": {
+      "message": "卸载将不可恢复，您确定想要卸载？"
+   },
+   "UninstallTip": {
+      "message": "卸载将不可恢复，请谨慎操作！"
+   },
+   "ViewPDFResults": {
+      "message": "查看PDF结果"
+   },
+   "default_title": {
+      "message": "将网页转换为福昕PDF"
+   },
+   "extDesc": {
+      "message": "将网页转换为福昕PDF"
+   },
+   "extName": {
+      "message": "Foxit PDF Creator"
+   }
+}

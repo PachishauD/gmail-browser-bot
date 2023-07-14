@@ -1,0 +1,50 @@
+{
+   "AppendLinkTargetToExistingPDF": {
+      "message": "다른 PDF에 링크 페이지 추가"
+   },
+   "AppendToExistingPDF": {
+      "message": "다른 PDF에 추가"
+   },
+   "ConvertLinkTargetToPDF": {
+      "message": "Foxit PDF로 링크 페이지 변환"
+   },
+   "ConvertToFoxitPDF": {
+      "message": "Foxit PDF로 변환"
+   },
+   "CreateAndEmail": {
+      "message": "만들고 이메일로 전송"
+   },
+   "OptionsTitle": {
+      "message": "Foxit PhantomPDF 확장자의 옵션"
+   },
+   "Preferences": {
+      "message": "환경 설정"
+   },
+   "Reinstall": {
+      "message": "다시 설치"
+   },
+   "Uninstall": {
+      "message": "제거"
+   },
+   "UninstallSuccessTip": {
+      "message": "\"Foxit PhantomPDF - PDF 만들기\" 확장자가 제거되었습니다. 브라우저 다시 시작 후 시행됩니다."
+   },
+   "UninstallSureTip": {
+      "message": "제거는 복구할 수 없습니다. 제거하시겠습니까?"
+   },
+   "UninstallTip": {
+      "message": "제거는 복구할 수 없습니다. 작업에 주의하십시오."
+   },
+   "ViewPDFResults": {
+      "message": "PDF 결과 보기"
+   },
+   "default_title": {
+      "message": "Foxit PDF로 웹 페이지 변환"
+   },
+   "extDesc": {
+      "message": "Foxit PDF로 웹 페이지 변환"
+   },
+   "extName": {
+      "message": "Foxit PDF Creator"
+   }
+}

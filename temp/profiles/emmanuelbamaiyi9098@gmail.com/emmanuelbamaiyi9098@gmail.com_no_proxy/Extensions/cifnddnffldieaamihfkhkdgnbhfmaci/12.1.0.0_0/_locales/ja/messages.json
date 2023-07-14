@@ -1,0 +1,50 @@
+{
+   "AppendLinkTargetToExistingPDF": {
+      "message": "リンク先のページを変換して既存の PDF に追加"
+   },
+   "AppendToExistingPDF": {
+      "message": "既存の PDF に追加"
+   },
+   "ConvertLinkTargetToPDF": {
+      "message": "リンク先のページを Foxit PDF に変換"
+   },
+   "ConvertToFoxitPDF": {
+      "message": "Foxit PDF に変換"
+   },
+   "CreateAndEmail": {
+      "message": "作成した PDF をメールで送付"
+   },
+   "OptionsTitle": {
+      "message": "Foxit PhantomPDF 拡張機能のオプション"
+   },
+   "Preferences": {
+      "message": "環境設定"
+   },
+   "Reinstall": {
+      "message": "再インストール"
+   },
+   "Uninstall": {
+      "message": "アンインストール"
+   },
+   "UninstallSuccessTip": {
+      "message": "\"Foxit PhantomPDF - PDF 作成\" 拡張機能のアンインストールに成功しました。反映するにはブラウザーを再起動してください。"
+   },
+   "UninstallSureTip": {
+      "message": "アンインストールすると元に戻すことができません。アンインストールしてもよろしいですか ?"
+   },
+   "UninstallTip": {
+      "message": "アンインストールすると元に戻すことができません。ご注意ください。"
+   },
+   "ViewPDFResults": {
+      "message": "作成した PDF を表示"
+   },
+   "default_title": {
+      "message": "Web ページを Foxit PDF に変換"
+   },
+   "extDesc": {
+      "message": "Web ページを Foxit PDF に変換"
+   },
+   "extName": {
+      "message": "Foxit PDF Creator"
+   }
+}

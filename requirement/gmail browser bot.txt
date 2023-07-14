@@ -1,0 +1,18 @@
+Gmail browser reply bot.
+
+We need bot for manual sending and reply like we did with smtp but with browser.
+So the bot first need to prepare account like add picture and change password(if new confirm recovery email) as we buy this accs.
+
+Bot must login to account with browser if ask sms it will need to unlock account with sms using service like sms-activate.org with API
+
+Next thing when its send mfirst message, and logout, if there will be reapled message for first message than bot must reply with second message
+
+About usage, we use 50 accs per windows profile, as we setup proxy with windows and 50 accs with one profile, one dedicated server can handle like 10 profiles.
+
+It may ask for captcha from time to time so we use service API like 2captcha.com
+
+Bot must save:
+disabled accounts in separate file.
+
+
+it must store cookies

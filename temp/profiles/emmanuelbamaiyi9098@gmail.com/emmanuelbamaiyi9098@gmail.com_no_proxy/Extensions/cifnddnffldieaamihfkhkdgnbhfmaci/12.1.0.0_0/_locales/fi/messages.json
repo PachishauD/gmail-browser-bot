@@ -1,0 +1,50 @@
+{
+   "AppendLinkTargetToExistingPDF": {
+      "message": "Liitä linkitetty sivu toiseen PDF-tiedostoon"
+   },
+   "AppendToExistingPDF": {
+      "message": "Liitä toiseen PDF-tiedostoon"
+   },
+   "ConvertLinkTargetToPDF": {
+      "message": "Muunna linkitetty sivu Foxit PDF -tiedostoksi"
+   },
+   "ConvertToFoxitPDF": {
+      "message": "Muunna Foxit PDF -tiedostoksi"
+   },
+   "CreateAndEmail": {
+      "message": "Luo ja lähetä sähköpostitse"
+   },
+   "OptionsTitle": {
+      "message": "Foxit PhantomPDF -laajennuksen asetukset"
+   },
+   "Preferences": {
+      "message": "Asetukset"
+   },
+   "Reinstall": {
+      "message": "Asenna uudelleen"
+   },
+   "Uninstall": {
+      "message": "Poista asennus"
+   },
+   "UninstallSuccessTip": {
+      "message": "Foxit PhantomPDF - Luo PDF -laajennuksen asennus on poistettu. Asennuksen poisto astuu voimaan, kun selain käynnistetään uudelleen."
+   },
+   "UninstallSureTip": {
+      "message": "ASENNUKSEN POISTOA ei voi peruuttaa. Haluatko varmasti poistaa asennuksen?"
+   },
+   "UninstallTip": {
+      "message": "ASENNUKSEN POISTOA ei voi peruuttaa. Toimi varovasti!"
+   },
+   "ViewPDFResults": {
+      "message": "Näytä PDF-tulos"
+   },
+   "default_title": {
+      "message": "Verkkosivun muuntaminen Foxit PDF -tiedostoksi"
+   },
+   "extDesc": {
+      "message": "Verkkosivun muuntaminen Foxit PDF -tiedostoksi"
+   },
+   "extName": {
+      "message": "Foxit PDF Creator"
+   }
+}

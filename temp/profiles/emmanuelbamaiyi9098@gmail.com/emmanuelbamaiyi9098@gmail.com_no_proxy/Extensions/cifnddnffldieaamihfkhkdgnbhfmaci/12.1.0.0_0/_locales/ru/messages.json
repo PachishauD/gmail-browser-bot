@@ -1,0 +1,50 @@
+{
+   "AppendLinkTargetToExistingPDF": {
+      "message": "Добавление связанной страницы в другой PDF-файл"
+   },
+   "AppendToExistingPDF": {
+      "message": "Добавить к другому PDF-файлу"
+   },
+   "ConvertLinkTargetToPDF": {
+      "message": "Преобразование связанной страницы в PDF-файл Foxit"
+   },
+   "ConvertToFoxitPDF": {
+      "message": "Преобразовать в PDF-файл Foxit"
+   },
+   "CreateAndEmail": {
+      "message": "Создать и отправить по электронной почте"
+   },
+   "OptionsTitle": {
+      "message": "Параметры расширения Foxit PhantomPDF"
+   },
+   "Preferences": {
+      "message": "Установки"
+   },
+   "Reinstall": {
+      "message": "Переустановить"
+   },
+   "Uninstall": {
+      "message": "Удалить"
+   },
+   "UninstallSuccessTip": {
+      "message": "Расширение \"Foxit PhantomPDF — создание PDF-файлов\" удалено. Изменения вступят в силу после перезапуска браузера."
+   },
+   "UninstallSureTip": {
+      "message": "УДАЛЕНИЕ нельзя будет отменить. Действительно удалить?"
+   },
+   "UninstallTip": {
+      "message": "УДАЛЕНИЕ нельзя будет отменить. Тщательно подумайте, прежде чем удалять."
+   },
+   "ViewPDFResults": {
+      "message": "Просмотреть итоговый PDF-файл"
+   },
+   "default_title": {
+      "message": "Преобразование веб-страницы в PDF-файл Foxit"
+   },
+   "extDesc": {
+      "message": "Преобразование веб-страницы в PDF-файл Foxit"
+   },
+   "extName": {
+      "message": "Foxit PDF Creator"
+   }
+}

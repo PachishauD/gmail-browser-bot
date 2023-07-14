@@ -1,0 +1,50 @@
+{
+   "AppendLinkTargetToExistingPDF": {
+      "message": "Gekoppelde pagina toevoegen aan andere PDF"
+   },
+   "AppendToExistingPDF": {
+      "message": "Toevoegen aan andere PDF"
+   },
+   "ConvertLinkTargetToPDF": {
+      "message": "Gekoppelde pagina converteren naar Foxit PDF"
+   },
+   "ConvertToFoxitPDF": {
+      "message": "Converteren naar Foxit PDF"
+   },
+   "CreateAndEmail": {
+      "message": "Maken en verzenden via e-mail"
+   },
+   "OptionsTitle": {
+      "message": "Opties voor Foxit PhantomPDF-extensie"
+   },
+   "Preferences": {
+      "message": "Voorkeuren"
+   },
+   "Reinstall": {
+      "message": "Opnieuw installeren"
+   },
+   "Uninstall": {
+      "message": "Verwijderen"
+   },
+   "UninstallSuccessTip": {
+      "message": "De extensie 'Foxit PhantomPDF - PDF maken' is verwijderd. Deze wijziging wordt van kracht nadat de browser opnieuw is gestart."
+   },
+   "UninstallSureTip": {
+      "message": "VERWIJDEREN kan niet ongedaan worden gemaakt. Weet u zeker dat u wilt doorgaan?"
+   },
+   "UninstallTip": {
+      "message": "VERWIJDEREN kan niet ongedaan worden gemaakt. Wees voorzichtig."
+   },
+   "ViewPDFResults": {
+      "message": "PDF-resultaat weergeven"
+   },
+   "default_title": {
+      "message": "De webpagina converteren naar Foxit PDF"
+   },
+   "extDesc": {
+      "message": "De webpagina converteren naar Foxit PDF"
+   },
+   "extName": {
+      "message": "Foxit PDF Creator"
+   }
+}

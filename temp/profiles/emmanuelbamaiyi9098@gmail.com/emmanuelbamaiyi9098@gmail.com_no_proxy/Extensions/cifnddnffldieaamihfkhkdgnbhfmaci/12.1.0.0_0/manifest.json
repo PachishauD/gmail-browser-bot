@@ -1,0 +1,28 @@
+{
+   "action": {
+      "default_icon": "logo16.png",
+      "default_popup": "popup.html",
+      "default_title": "__MSG_default_title__"
+   },
+   "background": {
+      "service_worker": "background.js"
+   },
+   "content_scripts": [ {
+      "js": [ "content_scripts.js" ],
+      "matches": [ "http://*/*", "https://*/*", "file:///*" ]
+   } ],
+   "default_locale": "en",
+   "description": "__MSG_extDesc__",
+   "icons": {
+      "128": "logo128.png",
+      "16": "logo16.png",
+      "48": "logo48.png"
+   },
+   "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAhZHk0tOpf8CkYrvS2NB8Vz29+NW0BQtfqXWJyQOQmaHhPo+5Po4Orv53gUu5nG3bVVUC3eyRju25hPas0h8memX+lNaSuJl38LLGS3/0g+KuCM7cNozfSygTorWr9QKCde+ZvjDnLqoE8ns76SjmIRDEyqXtQY11nDasPruH9tvADX7rIcMpSGmnldglj7LFSJnpnrc1W087cSNKk5qaBHAxQT80G/EpYbh8YZZwzaJzpqmdHqo+fv6xAnAJrhr942HbSmjU0TaxB/wNUgnUxqO1mhMTxfzrmQQVdyWvHFfVcYOmd40itRfzrWuJiCDnfUNrApxORS0xEkUQdAQywwIDAQAB",
+   "manifest_version": 3,
+   "minimum_chrome_version": "88",
+   "name": "__MSG_extName__",
+   "permissions": [ "contextMenus", "tabs", "nativeMessaging", "cookies" ],
+   "update_url": "https://clients2.google.com/service/update2/crx",
+   "version": "12.1.0.0"
+}
