@@ -1,8 +1,5 @@
 import time
-import xlrd
-import threading, time
-import random
-import pyautogui
+import time
 import pyperclip
 
 from email.parser import Parser
@@ -23,7 +20,7 @@ from src.utilities.select_message_for_sending import select_random_msg, read_fil
 url_senders = "./assets/txt/senders.txt"
 url_ricipients = "./assets/txt/recipients.txt"
 url_links = "./assets/txt/links.txt"
-url_message = "./assets/txt/First Message 200 Eng.txt"
+url_message = "./assets/txt/First Msgs 300.txt"
 url_reply_message = "./assets/txt/Reply Message 200 Eng.txt"
 url_total_sent = "./assets/txt/total_sent.txt"
 url_total_reply = "./assets/txt/total_reply.txt"
@@ -93,8 +90,14 @@ def login_to_gmail(driver, email, password, recovery_email, disable_index):
                     pass
                 pass
         except:
+            update_file(url_senders, disable_index)
+            with open(url_disabled, "a", encoding="utf-8") as disabled:
+                disabled.write(email)
             pass
     except:
+        update_file(url_senders, disable_index)
+        with open(url_disabled, "a", encoding="utf-8") as disabled:
+            disabled.write(email)
         pass
     return driver
 
@@ -209,9 +212,7 @@ def send_in_loop():
             Driver = driver_chrome_incognito()
             login = login_to_gmail(driver=Driver, email=Email, password=Password, recovery_email=Recovery, disable_index=dis_index)
             dis_index += 1
-            for i in range(0, 50):
-                num += 1
-                print(num)
+            for i in range(0, 10):
                 Message = select_random_msg(url_message)
                 if number_recipients == 0:
                     break
