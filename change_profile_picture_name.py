@@ -11,24 +11,36 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.action_chains import ActionChains
 
-from src.utilities.select_message_for_sending import select_random_msg, read_file_line_by_line
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 
-senders_file = xlrd.open_workbook("./assets/xls/50-pcs-2020-16.6.xlsx") 
-senders_list = senders_file.sheet_by_index(0)
-number_of_senders = senders_list.nrows
+from src.utilities.select_message_for_sending import select_random_msg, read_file_line_by_line, update_file
 
+# senders_file = xlrd.open_workbook("./assets/xls/50-pcs-2020-16.6.xlsx") 
+# senders_list = senders_file.sheet_by_index(0)
+# number_of_senders = senders_list.nrows
+url_senders = "./assets/txt/senders.txt"
+url_ricipients = "./assets/txt/recipients.txt"
+url_links = "./assets/txt/links.txt"
+url_message = "./assets/txt/First Msgs 300.txt"
+url_reply_message = "./assets/txt/Reply Message 200 Eng.txt"
+url_total_sent = "./assets/txt/total_sent.txt"
+url_total_reply = "./assets/txt/total_reply.txt"
+url_disabled = "./assets/accounts/disabled.txt"
+url_recipients_backup = "./assets/txt/recipients_backup.txt"
 current_dir = os.path.dirname(os.path.abspath(__file__))
 
 def set_clipboard(text):
     pyperclip.copy(text)
 
 
-def driver_chrome_incognito():
+def driver_chrome_incognito(profile_dir):
     from undetected_chromedriver import Chrome, ChromeOptions
     chrome_options = ChromeOptions()
-    chrome_options.add_argument("--incognito")
-    chrome_options.add_argument('--log-level=3')
-    chrome_options.add_argument("--log-level=OFF")
+    chrome_options.add_argument(f"--user-data-dir={profile_dir}")
+    # chrome_options.add_argument("--incognito")
+    # chrome_options.add_argument('--log-level=3')
+    # chrome_options.add_argument("--log-level=OFF")
     chrome_options.set_capability("goog:loggingPrefs", {'performance': 'ALL'})
     driver = Chrome(options=chrome_options, version_main = 114)
 
@@ -36,61 +48,72 @@ def driver_chrome_incognito():
     # print("----------------------------------------------------------------------------------------------")
     return driver
 
-def login_to_gmail(driver, email, password, recovery_email):
-    driver.get("https://google.com/accounts/Login")
-    time.sleep(1)
+def login_to_account(driver, email, password, recovery_email):
+    driver.get("https://accounts.google.com/")
     try:
+        WebDriverWait(driver, 5).until(EC.presence_of_element_located((By.NAME, "identifier")))
         input_email = driver.find_element(by=By.XPATH, value="//input[@name='identifier']")
         email_next = driver.find_element(by=By.ID, value="identifierNext")
-        time.sleep(1)
         input_email.send_keys(email)
-        time.sleep(1)
         email_next.click()
-        time.sleep(1)
+        time.sleep(2)
         try:
+            WebDriverWait(driver, 5).until(EC.presence_of_element_located((By.NAME, "Passwd")))
             input_password = driver.find_element(by=By.NAME, value="Passwd")
             password_Next = driver.find_element(by=By.ID, value="passwordNext")
-            time.sleep(1)
-            input_password.send_keys(password)
-            time.sleep(1)
-            password_Next.click()
-            time.sleep(1)
+            ActionChains(driver=driver).move_to_element(input_password).click().send_keys(password).perform()
+            ActionChains(driver=driver).move_to_element(password_Next).click().perform()
+            time.sleep(2)
             try:
-                confirm_recovery_email = driver.find_element(by=By.XPATH, value="//div[@data-challengeindex='2']")
-                time.sleep(1)
+                WebDriverWait(driver, 5).until(EC.presence_of_element_located((By.XPATH, "//div[@data-challengetype='12']")))
+                confirm_recovery_email = driver.find_element(by=By.XPATH, value="//div[@data-challengetype='12']")
                 confirm_recovery_email.click()
-                time.sleep(1)
+                time.sleep(2)
                 try:
+                    WebDriverWait(driver, 5).until(EC.presence_of_element_located((By.ID, "knowledge-preregistered-email-response")))
                     input_recovery_email = driver.find_element(by=By.ID, value="knowledge-preregistered-email-response")
                     input_recovery_email.send_keys(recovery_email)
                     input_recovery_email.send_keys(Keys.ENTER)
-                    time.sleep(1)
+                    time.sleep(2)
                     try:
+                        WebDriverWait(driver, 5).until(EC.presence_of_element_located((By.TAG_NAME, "button")))
                         not_now_button = driver.find_element(by=By.TAG_NAME, value="button")
                         not_now_button.click()
-                        time.sleep(1)
+                        time.sleep(2)
                     except:
-                        print("There is no 'Not now' button!")
+                        pass
                 except:
-                    print("Cannot find element 'input_recovery_email'")
+                    pass
             except:
-                print("There is no element have ID 'knowledge-preregistered-email-response'")
+                # try:
+                #     WebDriverWait(driver, 5).until(EC.presence_of_all_elements_located((By.XPATH, "//span[@jsname='V67aGc']")))
+                #     update_file(url_senders, disable_index)
+                #     with open(url_disabled, "a", encoding="utf-8") as disabled:
+                #         disabled.write(email)
+                # except:
+                #     pass
+                pass
         except:
-            print("There is no element named 'Passwd'")
+            # update_file(url_senders, disable_index)
+            # with open(url_disabled, "a", encoding="utf-8") as disabled:
+            #     disabled.write(email)
+            pass
     except:
+        # update_file(url_senders, disable_index)
+        # with open(url_disabled, "a", encoding="utf-8") as disabled:
+        #     disabled.write(email)
         pass
-    time.sleep(1)
     driver.get("https://aboutme.google.com")
     return driver
 
-def change_profile_picture_name(driver):
-
+def change_profile_picture_name(driver, index):
+    print(index)
     try:
         profile_name = driver.find_element(by=By.XPATH, value="//div[@class='bJCr1d']")
         profile_name.click()
         time.sleep(5)
         try:
-            name_edit = driver.find_element(by=By.XPATH, value="//button[@aria-label='Edit Name']")
+            name_edit = driver.find_element(by=By.XPATH, value="//button[@jsname='zRW8Re']")
             name_edit.click()
             time.sleep(1)
             try:
@@ -130,16 +153,18 @@ def change_profile_picture_name(driver):
         time.sleep(5)
         try:
             driver.switch_to.frame(1)
+            WebDriverWait(driver, 20).until(EC.presence_of_element_located((By.XPATH, "//img[@jsname='OX8uie']")))
+            picture_edit = driver.find_element(by=By.XPATH, value="//img[@jsname='OX8uie']")
             time.sleep(1)
-            picture_edit = driver.find_element(by=By.XPATH, value="//img[@class='EEKrSc xUNOSc']")
-            time.sleep(1)
-            picture_edit.click()
+            ActionChains(driver=driver).move_to_element(picture_edit).click().perform()
             time.sleep(3)
             try:
+                WebDriverWait(driver, 20).until(EC.presence_of_element_located((By.XPATH, "//button[@jsname='zf3vf']")))
                 from_computer = driver.find_element(by=By.XPATH, value="//button[@jsname='zf3vf']")
                 from_computer.click()
                 time.sleep(3)
                 try:
+                    WebDriverWait(driver, 20).until(EC.presence_of_element_located((By.XPATH, "//button[@jsname='NBieKd']")))
                     upload_button = driver.find_element(by=By.XPATH, value="//button[@jsname='NBieKd']")
                     upload_button.click()
                     time.sleep(2)
@@ -152,15 +177,18 @@ def change_profile_picture_name(driver):
                     pyautogui.press("enter")
                     time.sleep(4)
                     try:
+                        WebDriverWait(driver, 20).until(EC.presence_of_element_located((By.XPATH, "//button[@jsname='yTKzd']")))
                         next_button = driver.find_element(by=By.XPATH, value="//button[@jsname='yTKzd']")
                         next_button.click()
                         time.sleep(1)
                         try:
+                            WebDriverWait(driver, 20).until(EC.presence_of_element_located((By.XPATH, "//button[@jsname='WCwAu']")))
                             save_button = driver.find_element(by=By.XPATH, value="//button[@jsname='WCwAu']")
                             save_button.click()
-                            print("-------------------------------------------------------")
                             print("Changed profile picture!")
+                            print("-------------------------------------------------------")
                             try:
+                                WebDriverWait(driver, 20).until(EC.presence_of_element_located((By.XPATH, "//button[@jsname='MOMyIb']")))
                                 close_button = driver.find_element(by=By.XPATH, value="//button[@jsname='MOMyIb']")
                                 close_button.click()
                             except:
@@ -178,20 +206,25 @@ def change_profile_picture_name(driver):
             pass
     except:
         pass
-    driver.close()
+    driver.quit()
 
     
 
 def main():
-    for i in range(0, number_of_senders):
-        email = senders_list.cell_value(i, 0)
-        password = senders_list.cell_value(i, 1)
-        recovery_email = senders_list.cell_value(i, 2)
-        driver = driver_chrome_incognito()
+    senders = read_file_line_by_line("./assets/txt/senders.txt")
+    num_senders = len(senders)
+    for i in range(0, num_senders):
+        email = senders[i].split(",")[0].strip()
+        password = senders[i].split(",")[1].strip()
+        recovery = senders[i].split(",")[2].strip()
+        profile_subfix = '{0}'.format(email.split('@')[0]).strip().capitalize()
+        profile_name = "Profile " + profile_subfix
+        profile_dir = f"C:\\Users\\Administrator\\AppData\\Local\\Google\\Chrome\\User Data\\{profile_name}"
+        driver = driver_chrome_incognito(profile_dir=profile_dir)
         time.sleep(1)
-        gmail_driver = login_to_gmail(driver=driver, email=email, password=password, recovery_email=recovery_email)
+        gmail_driver = login_to_account(driver=driver, email=email, password=password, recovery_email=recovery)
         time.sleep(1)
-        change_profile_picture_name(gmail_driver)
+        change_profile_picture_name(gmail_driver, i)
 
 
 if __name__ == '__main__':

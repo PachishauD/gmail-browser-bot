@@ -42,6 +42,9 @@ def login(profile_dir, email, password, recovery_email):
     chrome_options = ChromeOptions()
     # chrome_options.add_argument("--headless")
     chrome_options.add_argument(f"--user-data-dir={profile_dir}")
+    chrome_options.add_argument('--log-level=3')
+    chrome_options.add_argument("--log-level=OFF")
+    chrome_options.set_capability("goog:loggingPrefs", {'performance': 'ALL'})
     driver = Chrome(options=chrome_options, version_main = 114)
 
     # # Navigate to the Google login page
@@ -170,25 +173,17 @@ def watch_unread_gmails(driver):
         inbox_button.click()
         print("x")
         try:
-            unread_email = driver.find_elements(by=By.XPATH, value='//span[@class="zF"]')
-            # email_senders = unread_email.find_elements(by=By.XPATH, value='//span[@class="zF"]')
+            unread_email = driver.find_element(by=By.XPATH, value="//tr[@class='zA zE']")
+            email_senders = unread_email.find_elements(by=By.XPATH, value='//span[@class="zF"]')
             recipients = read_file_line_by_line(url_recipients_backup)
             temp_mails = []
             print("y")
-            for email_sender in unread_email:
-                if email_sender.get_attribute:
-                    print(email_sender.get_attribute("email"))
-
-                    # if email_sender.get_attribute("email") in temp_mails:
-                    #     continue
-                    # else:
+            for email_sender in email_senders:
+                if email_sender.get_attribute("email") in temp_mails:
+                    continue
+                else:
                     temp_mails.append(email_sender.get_attribute("email"))
-                    print(temp_mails)
-                # print(email_sender.get_attribute("email"))
-
-            print(temp_mails)
             for temp_mail in temp_mails:
-                print("hhhhh:" + temp_mail.strip())
                 if temp_mail.strip() + '\n' in recipients:
                     reply_msg = select_random_msg(url_reply_message).split(":")[0] + " : " + select_random_msg(url_links)
                     total_reply += 1
@@ -231,20 +226,22 @@ def main():
             break
         else:
             for i in range(0, num_senders):
-                profile_name = "Profile " + format(i + 1)
-                profile_dir = f"C:\\Users\\Administrator\\AppData\\Local\\Google\\Chrome\\User Data\\{profile_name}"
                 email = senders[i].split(",")[0].strip()
                 password = senders[i].split(",")[1].strip()
                 recovery = senders[i].split(",")[2].strip()
+                profile_subfix = '{0}'.format(email.split('@')[0]).strip().capitalize()
+                profile_name = "Profile " + profile_subfix
+                profile_dir = f"C:\\Users\\Administrator\\AppData\\Local\\Google\\Chrome\\User Data\\{profile_name}"
+                
                 print(profile_dir)
                 driver = login(profile_dir=profile_dir, email=email, password=password, recovery_email=recovery)
-                # for i in range(0, 2):
-                #     Message = select_random_msg("./assets/txt/First Msgs 300.txt")
-                #     recipients = read_file_line_by_line(url_ricipients)
-                #     Recipient = recipients[0].strip()
-                #     send_mail(driver=driver, msg_content=Message, recipient_email=Recipient)
-                #     update_file(url_ricipients, 1)
-                #     time.sleep(2)
+                for i in range(0, 10):
+                    Message = select_random_msg("./assets/txt/First Msgs 300.txt")
+                    recipients = read_file_line_by_line(url_ricipients)
+                    Recipient = recipients[0].strip()
+                    send_mail(driver=driver, msg_content=Message, recipient_email=Recipient)
+                    update_file(url_ricipients, 1)
+                    time.sleep(2)
                 watch_unread_gmails(driver=driver)
                 driver.quit()
 

@@ -2,9 +2,12 @@ import time
 import time
 import pyperclip
 import pickle
+import random
+import threading
 
 from email.parser import Parser
 from email.message import EmailMessage
+from multiprocessing import Process
 
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
@@ -28,7 +31,9 @@ url_total_reply = "./assets/txt/total_reply.txt"
 url_disabled = "./assets/accounts/disabled.txt"
 url_recipients_backup = "./assets/txt/recipients_backup.txt"
 
+recipients = read_file_line_by_line(url_ricipients)
 
+num = 0
 
 def copy(string):
     pyperclip.copy(string)
@@ -48,19 +53,19 @@ def driver_chrome_incognito():
 def login_to_gmail(driver, email, password, recovery_email, disable_index):
     driver.get("https://gmail.com")
     try:
-        WebDriverWait(driver, 5).until(EC.presence_of_element_located((By.NAME, "identifier")))
+        WebDriverWait(driver, 100).until(EC.presence_of_element_located((By.NAME, "identifier")))
         input_email = driver.find_element(by=By.XPATH, value="//input[@name='identifier']")
         email_next = driver.find_element(by=By.ID, value="identifierNext")
         input_email.send_keys(email)
         email_next.click()
         time.sleep(2)
         try:
-            WebDriverWait(driver, 5).until(EC.presence_of_element_located((By.NAME, "Passwd")))
+            WebDriverWait(driver, 100).until(EC.presence_of_element_located((By.NAME, "Passwd")))
             input_password = driver.find_element(by=By.NAME, value="Passwd")
             password_Next = driver.find_element(by=By.ID, value="passwordNext")
-            ActionChains(driver=driver).move_to_element(input_password).click().send_keys(password).perform()
+            input_password.send_keys(password)
             ActionChains(driver=driver).move_to_element(password_Next).click().perform()
-            time.sleep(500)
+            time.sleep(2)
             try:
                 WebDriverWait(driver, 5).until(EC.presence_of_element_located((By.XPATH, "//div[@data-challengetype='12']")))
                 confirm_recovery_email = driver.find_element(by=By.XPATH, value="//div[@data-challengetype='12']")
@@ -100,62 +105,77 @@ def login_to_gmail(driver, email, password, recovery_email, disable_index):
         # with open(url_disabled, "a", encoding="utf-8") as disabled:
         #     disabled.write(email)
         pass
-    cookies = driver.get_cookies()
-    pre_email = '{0}'.format(email.split('@')[0]).strip()
-    filename = "./assets/cookies/" + pre_email + ".txt"
-    with open(filename, "w") as file:
-        for cookie in cookies:
-            file.write(f"{cookie['name']}={cookie['value']}")
+    # cookies = driver.get_cookies()
+    # pre_email = '{0}'.format(email.split('@')[0]).strip()
+    # filename = "./assets/cookies/" + pre_email + ".txt"
+    # with open(filename, "w") as file:
+    #     for cookie in cookies:
+    #         file.write(f"{cookie['name']}={cookie['value']}")
     return driver
 
-def send_mail(driver, msg_content, recipient_email):  
+def send_mail(driver, msg_content, recipient_email):
     try:
-        driver.find_element(by=By.XPATH, value="//div[@class='T-I T-I-KE L3']").click()
+        WebDriverWait(driver, 30).until(EC.presence_of_element_located((By.XPATH, "//div[@jscontroller='eIu7Db']")))
+        driver.find_element(by=By.XPATH, value="//div[@jscontroller='eIu7Db']").click()
         time.sleep(1)
         try:
+            WebDriverWait(driver, 30).until(EC.presence_of_element_located((By.XPATH, "//input[@class='agP aFw']")))
             recipient = driver.find_element(by=By.XPATH, value="//input[@class='agP aFw']")
             recipient.send_keys(recipient_email)
             time.sleep(1)
             try:
+                WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.NAME, "subjectbox")))
                 subject = driver.find_element(by=By.NAME, value="subjectbox")
                 subject_content ='{0}'.format(recipient_email.split('@')[0]).strip().capitalize()
                 subject.send_keys(subject_content)
                 time.sleep(1)
-                try:    
-                    msg_body = driver.find_element(by=By.XPATH, value="//div[@aria-label='Message Body']")
+                try:
+                    WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.XPATH, "//div[@class='Am Al editable LW-avf tS-tW']")))
+                    # msg_body = driver.find_element(by=By.XPATH, value="//div[@aria-label='Message Body']")
+                    msg_body = driver.find_element(by=By.XPATH, value="//div[@class='Am Al editable LW-avf tS-tW']")
                     time.sleep(1)
                     time.sleep(1)
                     ActionChains(driver=driver).move_to_element(msg_body).click().perform()
+                    # msg_body.send_keys(msg_content)
                     copy(msg_content)
                     msg_body.send_keys(Keys.CONTROL + "v")
                     time.sleep(2)
                     try:
+                        WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.XPATH, "//div[@class='T-I J-J5-Ji aoO v7 T-I-atl L3']")))
                         send_button = driver.find_element(by=By.XPATH, value="//div[@class='T-I J-J5-Ji aoO v7 T-I-atl L3']")
                         send_button.click()
                         print("---------------------------------------------------------->")
-                        total_sent = read_file_line_by_line(url_total_sent)[0]
-                        total_reply = read_file_line_by_line(url_total_reply)[0]
-                        print("<----------Total sent: " + total_sent + " Total reply: " + total_reply + "---------->")
+                        total_sent = int(read_file_line_by_line(url_total_sent)[0])
+                        total_reply = int(read_file_line_by_line(url_total_reply)[0])
+                        total_sent += 1
+                        print("<----------Total sent: " + format(total_sent) + " Total reply: " + format(total_reply) + "---------->")
+                        with open(url_total_sent, "w", encoding="utf-8") as file:
+                            file.write(format(total_sent))
                         time.sleep(2)
 
                     except:
+                        print("x")
                         pass
                 except:
+                    print("y")
                     pass
             except:
+                print("z")
                 pass
         except:
+            print("h")
             pass
     except:
+        print("j")
         pass
-    return driver
+    # return driver
 
 def watch_unread_gmails(driver):
     print("watching.....")
     total_reply = int(read_file_line_by_line(url_total_reply)[0])
     # time.sleep(1000)
     try:
-        WebDriverWait(driver, 20).until(EC.presence_of_element_located((By.XPATH, "//div[@class='aio UKr6le']")))    
+        WebDriverWait(driver, 100).until(EC.presence_of_element_located((By.XPATH, "//div[@class='aio UKr6le']")))    
         inbox_button = driver.find_element(by=By.XPATH, value="//div[@class='aio UKr6le']")
         inbox_button.click()
         
@@ -182,7 +202,7 @@ def watch_unread_gmails(driver):
                     pass
                     # print(email)
             time.sleep(1)
-            select_all = driver.find_element(by=By.XPATH, value="//div[@aria-label='Select']")
+            select_all = driver.find_element(by=By.XPATH, value="//div[@class='T-I J-J5-Ji T-Pm T-I-ax7 L3 J-JN-M-I']")
             time.sleep(2)
             select_all.click()
             time.sleep(2)
@@ -200,55 +220,47 @@ def watch_unread_gmails(driver):
             # email_body = email.find_element_by_xpath('.//span[@class="y2"]').text
     except:
         pass
+    # return driver
     
 
-def send_in_loop():
-    num = 0
-    total_sent = int(read_file_line_by_line(url_total_sent)[0])
-    recipients  = read_file_line_by_line(url_ricipients)
-    number_recipients = len(recipients)
-    while number_recipients != 0:
-        dis_index = 1
-        senders = read_file_line_by_line(url_senders)
-        for sender in senders:
-            sender_info = sender.split(",")
-            Email = sender_info[0]
-            Password = sender_info[1]
-            Recovery = sender_info[2]
-            Driver = driver_chrome_incognito()
-            login = login_to_gmail(driver=Driver, email=Email, password=Password, recovery_email=Recovery, disable_index=dis_index)
-            dis_index += 1
-            for i in range(0, 10):
+
+def send_watch(index):
+    senders = read_file_line_by_line(url_senders)
+    print(senders[index])
+    Email = senders[index].split(",")[0].split()
+    Passwd = senders[index].split(",")[1].split()
+    Recovery = senders[index].split(",")[2].split()
+    Driver = driver_chrome_incognito()
+    Login= login_to_gmail(driver=Driver, email=Email, password=Passwd, recovery_email=Recovery, disable_index=(index+1))
+    while True:
+        for i in range(0, 50):
+            recipients = read_file_line_by_line(url_ricipients)
+            num_recipients = len(recipients)
+            if num_recipients == 0:
+                break
+            else:
                 Message = select_random_msg(url_message)
-                if number_recipients == 0:
-                    break
-                elif number_recipients <= i:
-                    Recipient = recipients[0]
-                    send_mail(driver=login, msg_content=Message, recipient_email=Recipient)
-                    print(Email + Recipient + "\n")
-                    update_file(url_ricipients, 1)
-                    recipients = read_file_line_by_line(url_ricipients)
-                    number_recipients = len(recipients)
-                    total_sent += 1
-                else:
-                    Recipient = recipients[i].strip()
-                    send_mail(driver=login, msg_content=Message, recipient_email=Recipient)
-                    update_file(url_ricipients, i+1)
-                    recipients = read_file_line_by_line(url_ricipients)
-                    number_recipients = len(recipients)
-                    total_sent += 1
-                with open(url_total_sent, "w", encoding="utf-8") as total:
-                    total.write(format(total_sent))
-            watch_unread_gmails(driver=login)
-            Driver.close()
+                print(Message)
+                Recipient = select_random_msg(url_ricipients)
+                print(Recipient)
+                send_mail(driver=Login, msg_content=Message, recipient_email=Recipient.strip())
+                # update_file(url_ricipients, 1)
+                time.sleep(3)
+        watch_unread_gmails(driver=Login)
+        time.sleep(1000)
 
-
-    print("Sent to all recipients!")
-    
+        
 
 def main():
-    send_in_loop()
+    # threads = []
+    processes = []
+    senders = read_file_line_by_line(url_senders)
+    for i in range(0, len(senders)):
+        process = Process(target=send_watch, args=(i,))
+        processes.append(process)
+        process.start()
+        time.sleep(200)
 
-if __name__ == '__main__':
+if __name__ == '__main__': 
     main()
 
