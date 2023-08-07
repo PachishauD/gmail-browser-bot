@@ -46,10 +46,10 @@ def login_to_gmail(driver, email, password, recovery_email):
             password_Next = driver.find_element(by=By.ID, value="passwordNext")
             ActionChains(driver=driver).move_to_element(input_password).click().send_keys(password).perform()
             ActionChains(driver=driver).move_to_element(password_Next).click().perform()
-            time.sleep(2)
+            time.sleep(100)
             try:
-                WebDriverWait(driver, 5).until(EC.presence_of_element_located((By.XPATH, "//div[@data-challengeindex='2']")))
-                confirm_recovery_email = driver.find_element(by=By.XPATH, value="//div[@data-challengeindex='2']")
+                WebDriverWait(driver, 5).until(EC.presence_of_element_located((By.XPATH, "//div[@jsname='EBHGs']")))
+                confirm_recovery_email = driver.find_element(by=By.XPATH, value="//div[@jsname='EBHGs']")
                 confirm_recovery_email.click()
                 time.sleep(2)
                 try:
@@ -151,14 +151,14 @@ def login_to_gmail(driver, email, password, recovery_email):
                 pass
     except:
         pass
-    pickle.dump(driver.get_cookies(), open('cookies.pkl', 'wb'))
+    pickle.dump(driver.get_cookies(), open('cookies.txt', 'wb'))
     return driver
 
 
 
 def main():
     driver = driver_chrome_incognito()
-    login_to_gmail(driver=driver, email="um5209688@gmail.com", password="Xbvmfsqpinql", recovery_email="koqmnuoqscnk424710@kaishime.com")
+    login_to_gmail(driver=driver, email="pathraporn112233@gmail.com", password="hgukZvkaMjbn", recovery_email="crosschase393202@hotmail.com")
 
 if __name__ == '__main__':
     main()
