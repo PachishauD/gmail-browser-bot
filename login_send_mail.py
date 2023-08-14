@@ -42,9 +42,9 @@ def login(profile_dir, email, password, recovery_email):
     chrome_options = ChromeOptions()
     # chrome_options.add_argument("--headless")
     chrome_options.add_argument(f"--user-data-dir={profile_dir}")
-    chrome_options.add_argument('--log-level=3')
-    chrome_options.add_argument("--log-level=OFF")
-    chrome_options.set_capability("goog:loggingPrefs", {'performance': 'ALL'})
+    # chrome_options.add_argument('--log-level=3')
+    # chrome_options.add_argument("--log-level=OFF")
+    # chrome_options.set_capability("goog:loggingPrefs", {'performance': 'ALL'})
     driver = Chrome(options=chrome_options, version_main = 114)
 
     # # Navigate to the Google login page
@@ -123,7 +123,7 @@ def send_mail(driver, msg_content, recipient_email):
                     WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.NAME, "subjectbox")))
                     subject = driver.find_element(by=By.NAME, value="subjectbox")
                     subject_content ='{0}'.format(recipient_email.split('@')[0]).strip().capitalize()
-                    subject.send_keys(subject_content + "!")
+                    subject.send_keys(subject_content)
                     time.sleep(1)
                     try:
                         WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.XPATH, "//div[@class='Am Al editable LW-avf tS-tW']")))
@@ -132,11 +132,11 @@ def send_mail(driver, msg_content, recipient_email):
                         time.sleep(1)
                         time.sleep(1)
                         ActionChains(driver=driver).move_to_element(msg_body).click().perform()
-                        msg_body.send_keys("Hi, " + subject_content + "!" + "\n")
+                        msg_body.send_keys(recipient_email + " - " + "Is that your email address? I was looking for contact to you. Please reply and confirm.\nRegards\n")
                         time.sleep(1)
                         # msg_body.send_keys(msg_content)
-                        copy(msg_content)
-                        msg_body.send_keys(Keys.CONTROL + "v")
+                        # copy(msg_content)
+                        # msg_body.send_keys(Keys.CONTROL + "v")
                         time.sleep(1)
                         try:
                             WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.XPATH, "//div[@class='T-I J-J5-Ji aoO v7 T-I-atl L3']")))
@@ -235,15 +235,16 @@ def main():
                 
                 print(profile_dir)
                 driver = login(profile_dir=profile_dir, email=email, password=password, recovery_email=recovery)
-                for i in range(0, 10):
+                for i in range(0, 1):
                     Message = select_random_msg("./assets/txt/First Msgs 300.txt")
                     recipients = read_file_line_by_line(url_ricipients)
                     Recipient = recipients[0].strip()
-                    send_mail(driver=driver, msg_content=Message, recipient_email=Recipient)
+                    send_mail(driver=driver, msg_content=Message, recipient_email="stacho1988@gmail.com")
                     update_file(url_ricipients, 1)
-                    time.sleep(2)
+                    time.sleep(250)
                 watch_unread_gmails(driver=driver)
                 driver.quit()
+        time.sleep(7200)
 
 
 if __name__ == "__main__":
