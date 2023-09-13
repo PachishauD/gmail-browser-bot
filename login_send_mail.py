@@ -5,6 +5,9 @@ import time
 import pyperclip
 import pickle
 import multiprocessing
+import pyautogui
+import random
+import os
 
 from email.parser import Parser
 from email.message import EmailMessage
@@ -23,13 +26,14 @@ from src.utilities.select_message_for_sending import select_random_msg, read_fil
 # Set up the Chrome driver with a user profile
 url_senders = "./assets/txt/senders.txt"
 url_ricipients = "./assets/txt/recipients.txt"
-url_links = "./assets/txt/links.txt"
+url_links = "./assets/txt/Links test manualbot gmail.txt"
 url_message = "./assets/txt/First Msgs 300.txt"
 url_reply_message = "./assets/txt/Reply Message 200 Eng.txt"
 url_total_sent = "./assets/txt/total_sent.txt"
 url_total_reply = "./assets/txt/total_reply.txt"
 url_disabled = "./assets/accounts/disabled.txt"
 url_recipients_backup = "./assets/txt/recipients_backup.txt"
+url_recipients_test = "./assets/txt/recipients test.txt"
 
 recipients = read_file_line_by_line(url_ricipients)
 num = 0
@@ -107,7 +111,7 @@ def login(profile_dir, email, password, recovery_email):
     # Save the profile for later use
     return driver
 
-def send_mail(driver, msg_content, recipient_email):
+def send_mail(driver, msg_content, recipient_email, isreply):
     driver.get("https://gmail.com")
     try:
         WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.XPATH, "//div[@class='T-I T-I-KE L3']")))
@@ -117,13 +121,19 @@ def send_mail(driver, msg_content, recipient_email):
             recipient = driver.find_element(by=By.XPATH, value="//input[@class='agP aFw']")
             print(recipient_email)
             try:
-                ActionChains(driver=driver).move_to_element(recipient).send_keys(recipient_email).perform()
+                for let in recipient_email:
+                    ActionChains(driver=driver).move_to_element(recipient).send_keys(let).perform()
+                    delay = random.uniform(0.1, 0.5)
+                    time.sleep(delay)
                 time.sleep(1)
                 try:
                     WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.NAME, "subjectbox")))
                     subject = driver.find_element(by=By.NAME, value="subjectbox")
                     subject_content ='{0}'.format(recipient_email.split('@')[0]).strip().capitalize()
-                    subject.send_keys(subject_content)
+                    for letter in subject_content:
+                        subject.send_keys(letter)
+                        delay = random.uniform(0.1, 0.5)
+                        time.sleep(delay)
                     time.sleep(1)
                     try:
                         WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.XPATH, "//div[@class='Am Al editable LW-avf tS-tW']")))
@@ -132,25 +142,51 @@ def send_mail(driver, msg_content, recipient_email):
                         time.sleep(1)
                         time.sleep(1)
                         ActionChains(driver=driver).move_to_element(msg_body).click().perform()
-                        msg_body.send_keys(recipient_email + " - " + "Is that your email address? I was looking for contact to you. Please reply and confirm.\nRegards\n")
+                        time.sleep(1)
+                        # pyautogui.hotkey("enter")
+                        time.sleep(1)
+                        if isreply == "true":
+                            for letter in msg_content:
+                                msg_body.send_keys(letter)
+                                delay = random.uniform(0.1, 0.5)
+                                time.sleep(delay)
+                        else:
+                            message = "Hello " + recipient_email + " " + select_random_msg(url_message).strip() + "Find Me here: " + select_random_msg(url_links).strip()
+                            for letter in message:
+                                msg_body.send_keys(letter)
+                                delay = random.uniform(0.1, 0.5)
+                                time.sleep(delay)
+                        # driver.execute_script(f"arguments[0].innerHTML = '{message}';", msg_body)
+                        # msg_body.send_keys(recipient_email + " - " + "Is that your email address? I was looking for contact to you. Please reply and confirm.\nRegards.")
+                        # pyautogui.typewrite(recipient_email + " - " + "Is that your email address? I was looking for contact to you. Please reply and confirm. Regards.")
                         time.sleep(1)
                         # msg_body.send_keys(msg_content)
                         # copy(msg_content)
                         # msg_body.send_keys(Keys.CONTROL + "v")
-                        time.sleep(1)
-                        try:
-                            WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.XPATH, "//div[@class='T-I J-J5-Ji aoO v7 T-I-atl L3']")))
-                            send_button = driver.find_element(by=By.XPATH, value="//div[@class='T-I J-J5-Ji aoO v7 T-I-atl L3']")
-                            send_button.click()
-                            print("---------------------------------------------------------->")
-                            total_sent = int(read_file_line_by_line(url_total_sent)[0])
-                            total_reply = int(read_file_line_by_line(url_total_reply)[0])
-                            total_sent += 1
-                            print("<----------Total sent: " + format(total_sent) + " Total reply: " + format(total_reply) + "---------->")
-                            with open(url_total_sent, "w", encoding="utf-8") as file:
-                                file.write(format(total_sent))
-                        except:
-                            pass
+                        time.sleep(5)
+                        msg_body.send_keys(Keys.CONTROL + Keys.ENTER)
+                        print("---------------------------------------------------------->")
+                        total_sent = int(read_file_line_by_line(url_total_sent)[0])
+                        total_reply = int(read_file_line_by_line(url_total_reply)[0])
+                        total_sent += 1
+                        print("<----------Total sent: " + format(total_sent) + " Total reply: " + format(total_reply) + "---------->")
+                        with open(url_total_sent, "w", encoding="utf-8") as file:
+                            file.write(format(total_sent))
+                        # try:
+                        #     WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.XPATH, "//div[@class='T-I J-J5-Ji aoO v7 T-I-atl L3']")))
+                        #     send_button = driver.find_element(by=By.XPATH, value="//div[@class='T-I J-J5-Ji aoO v7 T-I-atl L3']")
+                        #     print("x")
+                        #     ActionChains(driver=driver).move_to_element(send_button).click().perform()
+                        #     print("---------------------------------------------------------->")
+                        #     total_sent = int(read_file_line_by_line(url_total_sent)[0])
+                        #     total_reply = int(read_file_line_by_line(url_total_reply)[0])
+                        #     total_sent += 1
+                        #     print("<----------Total sent: " + format(total_sent) + " Total reply: " + format(total_reply) + "---------->")
+                        #     with open(url_total_sent, "w", encoding="utf-8") as file:
+                        #         file.write(format(total_sent))
+                        # except:
+                        #     print("err")
+                        #     pass
                     except:
                         pass
                 except:
@@ -186,8 +222,9 @@ def watch_unread_gmails(driver):
             for temp_mail in temp_mails:
                 if temp_mail.strip() + '\n' in recipients:
                     reply_msg = select_random_msg(url_reply_message).split(":")[0] + " : " + select_random_msg(url_links)
+                    Message = "In a world full of chaos, let me be your safe place. I will try to make every moment we enjoy together worth your while. Discover me here: " + select_random_msg(url_links).strip()
                     total_reply += 1
-                    send_mail(driver=driver, msg_content=reply_msg, recipient_email=temp_mail)
+                    send_mail(driver=driver, msg_content=Message, recipient_email=temp_mail, isreply="true")
                     with open(url_total_reply, "w", encoding="utf-8") as reply:
                         reply.write(format(total_reply))
                     print(format(total_reply) + " recipients replied to this bot!")
@@ -225,26 +262,28 @@ def main():
         if len(recipients) == 0:
             break
         else:
-            for i in range(0, num_senders):
+            for i in range(0, 5):
                 email = senders[i].split(",")[0].strip()
                 password = senders[i].split(",")[1].strip()
                 recovery = senders[i].split(",")[2].strip()
-                profile_subfix = '{0}'.format(email.split('@')[0]).strip().capitalize()
+                # profile_subfix = '{0}'.format(email.split('@')[0]).strip().capitalize()
+                profile_subfix = format(i + 1)
                 profile_name = "Profile " + profile_subfix
-                profile_dir = f"C:\\Users\\Administrator\\AppData\\Local\\Google\\Chrome\\User Data\\{profile_name}"
+                windows_profile_path = os.environ["USERPROFILE"]
+                profile_dir = f"{windows_profile_path}\\AppData\\Local\\Google\\Chrome\\User Data\\{profile_name}"
                 
                 print(profile_dir)
                 driver = login(profile_dir=profile_dir, email=email, password=password, recovery_email=recovery)
-                for i in range(0, 1):
-                    Message = select_random_msg("./assets/txt/First Msgs 300.txt")
-                    recipients = read_file_line_by_line(url_ricipients)
-                    Recipient = recipients[0].strip()
-                    send_mail(driver=driver, msg_content=Message, recipient_email="stacho1988@gmail.com")
-                    update_file(url_ricipients, 1)
-                    time.sleep(250)
+                
+                Message = select_random_msg("./assets/txt/First Msgs 300.txt")
+                recipients = read_file_line_by_line(url_ricipients)
+                Recipient = recipients[0].strip()
+                send_mail(driver=driver, msg_content=Message, recipient_email=Recipient, isreply="false")
+                update_file(url_ricipients, 1)
+                time.sleep(100)
                 watch_unread_gmails(driver=driver)
                 driver.quit()
-        time.sleep(7200)
+        time.sleep(200)
 
 
 if __name__ == "__main__":

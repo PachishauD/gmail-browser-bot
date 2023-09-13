@@ -32,9 +32,9 @@ url_total_sent = "./assets/txt/total_sent.txt"
 url_total_reply = "./assets/txt/total_reply.txt"
 url_disabled = "./assets/accounts/disabled.txt"
 url_recipients_backup = "./assets/txt/recipients_backup.txt"
-url_body_links = "./assets/txt/bodylinks.txt"
-url_txts = "./assets/txt/texts.txt"
-url_subject = "./assets/txt/subjects.txt"
+url_body_links = "./assets/txt/R Bodylinks 100 Eng.txt"
+url_txts = "./assets/txt/R Texts 100 Eng.txt"
+url_subject = "./assets/txt/R Subjects 100 Eng.txt"
 
 recipients = read_file_line_by_line(url_ricipients)
 num = 0
@@ -119,7 +119,7 @@ def send_mail(driver):
             recipient.send_keys(Keys.CONTROL + Keys.SHIFT + "b")
             try:
                 all_recipients = read_file_line_by_line(url_ricipients)
-                temp_array = ["Stacho1988@gmail.com", "afoucher7255@gmail.com"]
+                temp_array = []
                 rand_number = random.randrange(10, 19)
                 for i in range(0, rand_number):
                     # recipient.send_keys(all_recipients[i])
@@ -135,7 +135,9 @@ def send_mail(driver):
                     subject = driver.find_element(by=By.NAME, value="subjectbox")
                     # subject_content ='{0}'.format(recipient_email.split('@')[0]).strip().capitalize()
                     subject_content = select_random_msg(url_subject)
-                    subject.send_keys(subject_content + "!")
+                    copy(subject_content)
+                    # subject.send_keys(subject_content + "!")
+                    subject.send_keys(Keys.CONTROL + "v")
                     try:
                         WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.XPATH, "//div[@class='Am Al editable LW-avf tS-tW']")))
                         # msg_body = driver.find_element(by=By.XPATH, value="//div[@aria-label='Message Body']")
@@ -143,7 +145,10 @@ def send_mail(driver):
                         time.sleep(1)
                         ActionChains(driver=driver).move_to_element(msg_body).click().perform()
                         msg_text = select_random_msg(url_txts)
-                        msg_body.send_keys(msg_text)
+                        # msg_body.send_keys(msg_text)
+                        copy(msg_text)
+                        msg_body.send_keys(Keys.CONTROL + "v")
+                        msg_body.send_keys(Keys.CONTROL + Keys.END)             
                         msg_hyperlinks = select_random_msg(url_body_links)
                         bitlylinks = select_random_msg(url_links).strip()
                         try:
@@ -155,7 +160,9 @@ def send_mail(driver):
                         try:
                             WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.ID, "linkdialog-text")))
                             label = driver.find_element(by=By.ID, value="linkdialog-text")
-                            label.send_keys(msg_hyperlinks)
+                            copy(msg_hyperlinks)
+                            # label.send_keys(msg_hyperlinks)
+                            label.send_keys(Keys.CONTROL + "v")
                             time.sleep(1)
                         except:
                             pass
@@ -211,7 +218,7 @@ def main():
     if len(recipients) == 0:
         pass
     else:
-        for i in range(1, 50):
+        for i in range(53, 90):
             email = senders[i].split(",")[0].strip()
             password = senders[i].split(",")[1].strip()
             recovery = senders[i].split(",")[2].strip()
