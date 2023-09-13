@@ -217,9 +217,11 @@ def main():
         email = senders[i].split(",")[0].strip()
         password = senders[i].split(",")[1].strip()
         recovery = senders[i].split(",")[2].strip()
-        profile_subfix = '{0}'.format(email.split('@')[0]).strip().capitalize()
+        # profile_subfix = '{0}'.format(email.split('@')[0]).strip().capitalize()
+        profile_subfix = format(i + 1)
         profile_name = "Profile " + profile_subfix
-        profile_dir = f"C:\\Users\\Administrator\\AppData\\Local\\Google\\Chrome\\User Data\\{profile_name}"
+        windows_profile_path = os.environ["USERPROFILE"]
+        profile_dir = f"{windows_profile_path}\\AppData\\Local\\Google\\Chrome\\User Data\\{profile_name}"
         driver = driver_chrome_incognito(profile_dir=profile_dir)
         time.sleep(1)
         gmail_driver = login_to_account(driver=driver, email=email, password=password, recovery_email=recovery)
