@@ -27,11 +27,8 @@ url_accs = "./assets/Dzimitry_Accounts.txt"
 all_accs = read_file_line_by_line(url_accs)
 
 num_accs = len(all_accs)
-num = 1
 for i in range(0, num_accs):
-    filename = "./assets/accs" + format(num) + ".txt"
-    if i is not 0 and i % 200 == 0:
-        num += 1
+    filename = "./assets/accs" + format(i % 16 + 1) + ".txt"
     with open(filename, "a", encoding="utf-8") as file:
         file.write(all_accs[i].strip() + "\n")
     
