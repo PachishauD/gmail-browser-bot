@@ -12,12 +12,27 @@ from src.utilities.select_message_for_sending import read_file_line_by_line
 #     backup_code2 = senders[i].split(",")[5].strip()
 #     print(email, password, recovery, app_password, backup_code1, backup_code2)
 
-url_gmails = "./assets/gmail list usa_2.txt"
+# url_gmails = "./assets/txt/list usa test for manual bcc.txt"
 
-all_gmails = read_file_line_by_line(url_gmails)
-num_gmails = len(all_gmails)
+# all_gmails = read_file_line_by_line(url_gmails)
+# num_gmails = len(all_gmails)
 
-for i in range(0, num_gmails):
-    filename = "./assets/" + format(i % 5 + 1) + ".txt"
+# for i in range(0, num_gmails):
+#     if "@gmail.com" in all_gmails[i]:
+#         with open("./assets/real_gmails.txt", "a", encoding="utf-8") as file:
+#             file.write(all_gmails[i].strip() + "\n")
+
+url_accs = "./assets/Dzimitry_Accounts.txt"
+
+all_accs = read_file_line_by_line(url_accs)
+
+num_accs = len(all_accs)
+num = 1
+for i in range(0, num_accs):
+    filename = "./assets/accs" + format(num) + ".txt"
+    if i is not 0 and i % 200 == 0:
+        num += 1
     with open(filename, "a", encoding="utf-8") as file:
-        file.write(all_gmails[num_gmails - i - 1])
+        file.write(all_accs[i].strip() + "\n")
+    
+        
